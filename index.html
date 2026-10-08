@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Da reel ad articolo</title>
+  <link rel="stylesheet" href="stile.css">
+  <link rel="stylesheet" href="strumento.css">
+</head>
+<body>
+  <a class="salta-al-contenuto" href="#strumento">Salta al contenuto</a>
+
+  <header class="testata">
+    <div class="testata__interno">
+      <span class="marchio"><span class="marchio__testo">Media Factory</span></span>
+    </div>
+  </header>
+
+  <main id="strumento" class="contenitore">
+    <section class="hero">
+      <p class="hero__occhiello">Strumento per la redazione</p>
+      <h1>Da reel ad articolo</h1>
+      <p class="hero__testo">Incolla la trascrizione del reel, compila l'intestazione e scarica l'articolo in Markdown nel formato del blog. Tutto resta nel tuo browser.</p>
+    </section>
+
+    <section class="sezione">
+      <div class="strumento">
+
+        <form class="modulo" id="modulo" novalidate aria-label="Dati dell'articolo">
+          <div class="modulo__gruppo">
+            <h2 class="sezione__titolo">Intestazione</h2>
+
+            <div class="campo">
+              <label for="titolo">Titolo</label>
+              <input type="text" id="titolo" autocomplete="off">
+            </div>
+
+            <div class="doppio">
+              <div class="campo">
+                <label for="data">Data</label>
+                <input type="date" id="data">
+              </div>
+              <div class="campo">
+                <label for="categoria">Categoria</label>
+                <input type="text" id="categoria" placeholder="es. Volontariato" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="campo">
+              <label for="autore">Autore</label>
+              <input type="text" id="autore" value="Tung Tung Saur" autocomplete="off">
+            </div>
+
+            <div class="campo">
+              <div class="campo__riga">
+                <label for="estratto">Estratto</label>
+                <span class="campo__conteggio" id="estrattoCount">0 caratteri</span>
+              </div>
+              <textarea id="estratto" rows="2" placeholder="Una o due frasi che fanno venire voglia di leggere"></textarea>
+            </div>
+
+            <div class="campo">
+              <label for="copertina">Copertina (facoltativa)</label>
+              <input type="text" id="copertina" placeholder="Nome del file immagine" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="modulo__gruppo">
+            <h2 class="sezione__titolo">Testo</h2>
+
+            <div class="campo">
+              <div class="campo__riga">
+                <label for="corpo">Trascrizione del reel</label>
+                <span class="campo__conteggio" id="corpoCount">0 parole</span>
+              </div>
+              <textarea id="corpo" placeholder="Incolla qui il testo parlato, oppure carica un file .srt o .txt."></textarea>
+              <p class="campo__nota">Per aggiungere una sezione scrivi una riga che inizia con <code>## </code>, per esempio <code>## Come funziona</code>. I sottotitoli .srt e .vtt vengono ripuliti da numeri e orari in automatico.</p>
+            </div>
+
+            <div class="campo">
+              <label for="parag">Paragrafi</label>
+              <select id="parag">
+                <option value="0">Lascia come incollato</option>
+                <option value="2">Un paragrafo ogni 2 frasi</option>
+                <option value="3" selected>Un paragrafo ogni 3 frasi</option>
+                <option value="4">Un paragrafo ogni 4 frasi</option>
+              </select>
+            </div>
+
+            <div class="azioni">
+              <button type="button" class="bottone bottone--contorno" id="load">Carica file .srt o .txt</button>
+              <button type="button" class="bottone-testo" id="clear">Svuota tutto</button>
+            </div>
+            <input type="file" id="file" accept=".srt,.vtt,.txt,.md,text/plain" hidden>
+            <p class="esito" id="status" role="status" hidden></p>
+          </div>
+        </form>
+
+        <section class="pannello strumento__uscita" aria-label="Articolo">
+          <h2>File Markdown</h2>
+          <p class="nome-file" id="fname">articolo.md</p>
+          <div class="campo">
+            <label class="sr" for="out">File Markdown generato</label>
+            <textarea id="out" readonly spellcheck="false"></textarea>
+          </div>
+          <div class="azioni">
+            <button type="button" class="bottone bottone--pieno" id="dl">Scarica .md</button>
+            <button type="button" class="bottone bottone--contorno" id="copy">Copia</button>
+          </div>
+        </section>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="piede">
+    <p class="piede__nota">Strumento interno della redazione. I testi restano nel tuo browser e non vengono inviati a nessun server.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

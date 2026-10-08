@@ -1,0 +1,70 @@
+/* =================================================================
+   STRUMENTO "DA REEL AD ARTICOLO"
+   Usa solo variabili e classi di stile.css. Qui c'è solo ciò che
+   serve a questa pagina e che nel foglio di stile del progetto non esiste.
+   ================================================================= */
+
+.strumento{
+  display:grid;gap:var(--sp-griglia);
+  grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;
+}
+.strumento__uscita{
+  position:sticky;top:calc(120px + var(--sp-md));
+  display:flex;flex-direction:column;gap:var(--sp-md);min-width:0;
+}
+.strumento .modulo{min-width:0}
+
+.modulo__gruppo{display:flex;flex-direction:column;gap:var(--sp-md)}
+.modulo__gruppo + .modulo__gruppo{
+  border-top:1px solid var(--segnaposto);padding-top:var(--sp-md-plus);
+}
+.modulo__gruppo .sezione__titolo{margin-bottom:0}
+
+.doppio{
+  display:grid;gap:var(--sp-md);
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+
+/* menu a tendina e data: stessa forma dei campi di testo */
+.campo select{
+  font-family:inherit;font-size:var(--t-corpo);color:var(--blu-notte);
+  background:var(--grigio-chiaro);border:1px solid var(--blu);border-radius:var(--r-md);
+  padding:var(--sp-sm) 18px;width:100%;transition:box-shadow var(--transizione);
+}
+.campo select:focus{outline:0;box-shadow:0 0 0 3px rgba(34,72,241,.25)}
+.campo input,.campo textarea,.campo select{min-width:0}
+.campo textarea{line-height:1.5}
+#corpo{min-height:280px}
+
+.campo__riga{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-2xs)}
+.campo__conteggio{font-size:var(--t-meta);font-weight:800;color:var(--blu)}
+.campo__nota{font-size:var(--t-meta);line-height:1.5}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+
+.azioni{display:flex;flex-wrap:wrap;gap:var(--sp-xs-plus);align-items:center}
+.strumento .bottone{padding-inline:var(--sp-lg)}
+.bottone-testo{
+  background:none;border:0;cursor:pointer;padding:var(--sp-2xs) var(--sp-xs);
+  font-family:var(--font-testo);font-size:var(--t-corpo);font-weight:800;
+  color:var(--blu);text-decoration:underline;text-underline-offset:3px;
+}
+.bottone-testo:hover{color:var(--blu-notte)}
+
+.nome-file{
+  font-weight:800;color:var(--blu);overflow-wrap:anywhere;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9375rem;
+}
+.strumento__uscita h2{margin-bottom:0}
+#out{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.875rem;line-height:1.6;min-height:420px;resize:vertical;
+}
+
+@media (max-width:1080px){
+  .strumento{grid-template-columns:1fr}
+  .strumento__uscita{position:static}
+}
+@media (max-width:480px){
+  .doppio{grid-template-columns:1fr}
+  .azioni .bottone{width:100%;justify-content:center}
+}
