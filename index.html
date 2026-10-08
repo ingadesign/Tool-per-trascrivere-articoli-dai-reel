@@ -20,7 +20,7 @@
     <section class="hero">
       <p class="hero__occhiello">Strumento per la redazione</p>
       <h1>Da reel ad articolo</h1>
-      <p class="hero__testo">Incolla la trascrizione del reel, compila l'intestazione e scarica l'articolo in Markdown nel formato del blog. Tutto resta nel tuo browser.</p>
+      <p class="hero__testo">Trascrivi il reel, fallo raccontare come un articolo giornalistico e scarica il file Markdown nel formato del blog.</p>
     </section>
 
     <section class="sezione">
@@ -66,6 +66,37 @@
           </div>
 
           <div class="modulo__gruppo">
+            <h2 class="sezione__titolo">Trascrivi un video</h2>
+            <p class="campo__nota">Facoltativo. Scegli il reel e il testo parlato compare nella trascrizione qui sotto. Il video non lascia il tuo computer. La prima volta serve internet per scaricare il modello, poi resta salvato nel browser.</p>
+            <div class="doppio">
+              <div class="campo">
+                <label for="lingua">Lingua del video</label>
+                <select id="lingua">
+                  <option value="italian" selected>Italiano</option>
+                  <option value="english">Inglese</option>
+                  <option value="auto">Riconosci da solo</option>
+                </select>
+              </div>
+              <div class="campo">
+                <label for="modello">Precisione</label>
+                <select id="modello">
+                  <option value="Xenova/whisper-tiny">Veloce (~40 MB)</option>
+                  <option value="Xenova/whisper-base" selected>Media (~80 MB)</option>
+                  <option value="Xenova/whisper-small">Alta (~250 MB)</option>
+                </select>
+              </div>
+            </div>
+            <div class="azioni">
+              <button type="button" class="bottone bottone--contorno" id="loadVideo">Scegli video o audio</button>
+            </div>
+            <input type="file" id="fileVideo" accept="video/*,audio/*,.mp4,.mov,.m4a,.mp3,.wav,.webm" hidden>
+            <div class="trascrizione-stato" id="trascrizioneStato" hidden>
+              <progress id="progresso" max="100"></progress>
+              <p class="campo__nota" id="progressoTesto"></p>
+            </div>
+          </div>
+
+          <div class="modulo__gruppo">
             <h2 class="sezione__titolo">Testo</h2>
 
             <div class="campo">
@@ -92,6 +123,74 @@
               <button type="button" class="bottone-testo" id="clear">Svuota tutto</button>
             </div>
             <input type="file" id="file" accept=".srt,.vtt,.txt,.md,text/plain" hidden>
+          </div>
+
+          <div class="modulo__gruppo">
+            <h2 class="sezione__titolo">Scrivi l'articolo</h2>
+            <p class="campo__nota">Facoltativo. Claude legge la trascrizione e racconta il video come farebbe un giornalista, senza aggiungere fatti che nel video non ci sono. Serve una chiave API personale. Il testo della trascrizione va dal tuo browser ai server di Anthropic e da nessun'altra parte.</p>
+
+            <div class="campo">
+              <label for="apiKey">Chiave API Anthropic</label>
+              <input type="password" id="apiKey" autocomplete="off" spellcheck="false" placeholder="sk-ant-…">
+            </div>
+            <label class="spunta" for="ricordaChiave">
+              <input type="checkbox" id="ricordaChiave"> Ricorda la chiave su questo computer
+            </label>
+
+            <div class="doppio">
+              <div class="campo">
+                <label for="modelloAI">Modello</label>
+                <select id="modelloAI">
+                  <option value="claude-sonnet-5-5" selected>Sonnet 5.5</option>
+                  <option value="claude-haiku-5-5">Haiku 5.5 (economico)</option>
+                  <option value="claude-opus-5-5">Opus 5.5 (più curato)</option>
+                </select>
+              </div>
+              <div class="campo">
+                <label for="lunghezza">Lunghezza</label>
+                <select id="lunghezza">
+                  <option value="circa 300 parole">Breve</option>
+                  <option value="circa 500 parole" selected>Media</option>
+                  <option value="circa 800 parole">Lunga</option>
+                </select>
+              </div>
+            </div>
+            <div class="doppio">
+              <div class="campo">
+                <label for="voce">Voce</label>
+                <select id="voce">
+                  <option value="terza" selected>Cronista esterno</option>
+                  <option value="noi">Redazione (noi)</option>
+                </select>
+              </div>
+              <div class="campo">
+                <label for="sezioni">Sezioni</label>
+                <select id="sezioni">
+                  <option value="si" selected>Con titoletti</option>
+                  <option value="no">Solo paragrafi</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="campo">
+              <label for="note">Note per chi scrive (facoltativo)</label>
+              <textarea id="note" rows="2" placeholder="Cosa si vede nel video, nome del progetto, chi parla, dove e quando."></textarea>
+            </div>
+
+            <div class="azioni">
+              <button type="button" class="bottone bottone--pieno" id="scrivi">Scrivi l'articolo</button>
+              <button type="button" class="bottone bottone--contorno" id="ferma" hidden>Ferma</button>
+              <button type="button" class="bottone-testo" id="dimentica">Dimentica la chiave</button>
+            </div>
+
+            <div class="campo">
+              <div class="campo__riga">
+                <label for="articolo">Articolo scritto</label>
+                <span class="campo__conteggio" id="articoloCount">0 parole</span>
+              </div>
+              <textarea id="articolo" placeholder="L'articolo compare qui e puoi correggerlo. Se resta vuoto, nel file va la trascrizione."></textarea>
+              <p class="campo__nota">Titolo, estratto e categoria vuoti vengono compilati da Claude. Quelli che hai già scritto restano come sono.</p>
+            </div>
             <p class="esito" id="status" role="status" hidden></p>
           </div>
         </form>
@@ -114,7 +213,7 @@
   </main>
 
   <footer class="piede">
-    <p class="piede__nota">Strumento interno della redazione. I testi restano nel tuo browser e non vengono inviati a nessun server.</p>
+    <p class="piede__nota">Strumento interno della redazione. Testi e video restano nel tuo browser. Fanno eccezione la trascrizione automatica, che scarica da internet il motore e il modello la prima volta, e la scrittura dell'articolo, che invia a Anthropic il testo della trascrizione.</p>
   </footer>
 
   <script src="app.js"></script>

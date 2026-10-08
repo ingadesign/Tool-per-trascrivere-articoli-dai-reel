@@ -4,6 +4,8 @@
    serve a questa pagina e che nel foglio di stile del progetto non esiste.
    ================================================================= */
 
+[hidden]{display:none !important}
+
 .strumento{
   display:grid;gap:var(--sp-griglia);
   grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;
@@ -49,6 +51,21 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:
   color:var(--blu);text-decoration:underline;text-underline-offset:3px;
 }
 .bottone-testo:hover{color:var(--blu-notte)}
+
+.spunta{
+  display:flex;align-items:center;gap:var(--sp-2xs);
+  font-size:var(--t-meta);color:var(--blu-notte);cursor:pointer;
+}
+.spunta input{width:auto;accent-color:var(--blu);margin:0}
+#articolo{min-height:260px}
+.campo input[type="password"]{
+  font-family:inherit;font-size:var(--t-corpo);color:var(--blu-notte);
+  background:var(--grigio-chiaro);border:1px solid var(--blu);border-radius:var(--r-md);
+  padding:var(--sp-sm) 18px;width:100%;
+}
+
+.trascrizione-stato{display:flex;flex-direction:column;gap:var(--sp-2xs)}
+.trascrizione-stato progress{width:100%;height:10px;accent-color:var(--blu)}
 
 .nome-file{
   font-weight:800;color:var(--blu);overflow-wrap:anywhere;
